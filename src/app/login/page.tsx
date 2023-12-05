@@ -1,14 +1,12 @@
 "use client";
 import Input from "@/app/components/input/Input";
 import { LoginUser } from "@/services/LoginUser";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Loader } from "../components/loader/Loader";
 import { AgentCred } from "../interfaces/login.interface";
 import { useAuth } from "@/context/AuthContext";
 
 const Login = () => {
-  const router = useRouter();
   const { login } = useAuth();
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
