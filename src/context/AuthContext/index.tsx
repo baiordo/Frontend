@@ -43,16 +43,20 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    () => !!localStorage.getItem("it's fkn secret, boy")
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    const localStorageAvailable = typeof localStorage !== 'undefined';
+    return localStorageAvailable && !!localStorage.getItem("it's fkn secret, boy");
+  });
 
-  const [localStorageKey, setLocalStorageKey] = useState<boolean>(
-    !!localStorage.getItem("it's fkn secret, boy")
-  );
+  const [localStorageKey, setLocalStorageKey] = useState<boolean>(() => {
+    return typeof localStorage !== 'undefined' && !!localStorage.getItem("it's fkn secret, boy");
+  });
 
   const [userCredentials, setUserCredentials] = useState<AgentCred>(() => {
-    const storedUserCredentials = localStorage.getItem("it's fkn secret, boy");
+    const storedUserCredentials = typeof localStorage !== 'undefined'
+      ? localStorage.getItem("it's fkn secret, boy")
+      : null;
+
     return storedUserCredentials ? JSON.parse(storedUserCredentials) : {};
   });
 
