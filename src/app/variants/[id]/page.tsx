@@ -20,6 +20,9 @@ const Variant: React.FC = () => {
   const sign = variant.property_type === "Участок" ? "соток" : "м²";
   const userString = typeof window !== 'undefined' ? localStorage.getItem("it's fkn secret, boy") : null;
   const curator: AgentCred = userString ? JSON.parse(userString) : null;
+  if (curator === null) {
+    return <div>В доступе отказано</div>
+  }
   return (
     <div className="w-11/12 mx-auto text-base">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -46,7 +49,7 @@ const Variant: React.FC = () => {
       <p>Владелец: {variant.property_owner}</p>
       <p>Номер владельца: {variant.property_owner_phone_number}</p>
       <p>Описание: {variant.property_description}</p>
-      {curator !== null && curator.agent_id === variant.curator_id ? (
+      {curator.agent_id === variant.curator_id ? (
         <>
           <p>Примечание: {variant.property_note}</p>
           <p>Цена на руку: {variant.price_per_hand}$</p>
