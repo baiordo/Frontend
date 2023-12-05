@@ -44,24 +44,18 @@ interface AuthProviderProps {
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    const localStorageAvailable = typeof localStorage !== "undefined";
-    return (
-      localStorageAvailable && !!localStorage.getItem("it's fkn secret, boy")
-    );
+    const localStorageAvailable = typeof localStorage !== 'undefined';
+    return localStorageAvailable && !!localStorage.getItem("it's fkn secret, boy");
   });
 
   const [localStorageKey, setLocalStorageKey] = useState<boolean>(() => {
-    return (
-      typeof localStorage !== "undefined" &&
-      !!localStorage.getItem("it's fkn secret, boy")
-    );
+    return typeof localStorage !== 'undefined' && !!localStorage.getItem("it's fkn secret, boy");
   });
 
   const [userCredentials, setUserCredentials] = useState<AgentCred>(() => {
-    const storedUserCredentials =
-      typeof localStorage !== "undefined"
-        ? localStorage.getItem("it's fkn secret, boy")
-        : null;
+    const storedUserCredentials = typeof localStorage !== 'undefined'
+      ? localStorage.getItem("it's fkn secret, boy")
+      : null;
 
     return storedUserCredentials ? JSON.parse(storedUserCredentials) : {};
   });
@@ -71,43 +65,43 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const login = (data: any) => {
     localStorage.setItem("it's fkn secret, boy", JSON.stringify(data));
     setIsLoggedIn(true);
-    window.location.href = "/";
+    router.push("/");
   };
+
   const logout = () => {
     localStorage.removeItem("it's fkn secret, boy");
     setIsLoggedIn(false);
-    window.location.href = "/login";
+    router.push("/login");
   };
 
   const checkAuthAndRedirect = () => {
-    const localStorageAvailable = typeof localStorage !== "undefined";
-
-    const userLoggedIn =
-      localStorageAvailable && !!localStorage.getItem("it's fkn secret, boy");
+    const localStorageAvailable = typeof localStorage !== 'undefined';
+  
+    const userLoggedIn = localStorageAvailable && !!localStorage.getItem("it's fkn secret, boy");
     setIsLoggedIn(userLoggedIn);
-
+  
     if (!userLoggedIn) {
-      window.location.href = "/login";
+      router.push("/login");
     }
   };
-
+  
   // Проверка аутентификации (допустим, как-то очистился local storage),
   // спустя 5 минут этот useEffect пойдет смотреть, все ли норм
   useEffect(() => {
-    const localStorageAvailable = typeof localStorage !== "undefined";
-
+    const localStorageAvailable = typeof localStorage !== 'undefined';
+  
     if (localStorageAvailable) {
       checkAuthAndRedirect(); // Проверить сразу после монтирования компонента
-
+  
       const interval = setInterval(() => {
         checkAuthAndRedirect();
       }, 300000);
-
+  
       return () => clearInterval(interval);
     }
-
+  
     // Если localStorage недоступен, можно предпринять соответствующие действия
-    console.log("localStorage is not available.");
+    console.log('localStorage is not available.');
   }, []);
 
   return (
