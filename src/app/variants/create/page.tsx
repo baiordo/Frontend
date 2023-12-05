@@ -65,7 +65,7 @@ const CreateVariant: React.FC = () => {
       [key]: value,
     }));
   };
-  const userString = localStorage.getItem("it's fkn secret, boy");
+  const userString = typeof window !== 'undefined' ? localStorage.getItem("it's fkn secret, boy") : null;
   const curator: AgentCred = userString ? JSON.parse(userString) : null;
   const [property, setProperty] = useState<PropertyInterface>({
     property_type: "",

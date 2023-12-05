@@ -18,7 +18,7 @@ const Variant: React.FC = () => {
     return <div>Нет данных</div>;
   }
   const sign = variant.property_type === "Участок" ? "соток" : "м²";
-  const userString = localStorage.getItem("it's fkn secret, boy");
+  const userString = typeof window !== 'undefined' ? localStorage.getItem("it's fkn secret, boy") : null;
   const curator: AgentCred = userString ? JSON.parse(userString) : null;
   return (
     <div className="w-11/12 mx-auto text-base">
