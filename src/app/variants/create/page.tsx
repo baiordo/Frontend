@@ -88,7 +88,7 @@ const CreateVariant: React.FC = () => {
   });
   const [variant, setVariant] = useState<CreateVariantInterface>({
     images: undefined,
-    curator_id: curator.agent_id,
+    curator_id: curator? curator.agent_id : "",
     price_per_hand: "",
     price: "",
     area_id: "",
