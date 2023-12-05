@@ -9,7 +9,7 @@ import { Loader } from "../components/loader/Loader";
 
 const Variants: React.FC = () => {
   const [page, setPage] = useState<number>(1);
-  const userString = localStorage.getItem("it's fkn secret, boy");
+  const userString = typeof window !== 'undefined' ? localStorage.getItem("it's fkn secret, boy") : null;
   const curator: AgentCred = userString ? JSON.parse(userString) : null;
   const [all, setAll] = useState(true);
   const { data: variants, isFetching } = useQuery({

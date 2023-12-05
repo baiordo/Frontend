@@ -12,8 +12,9 @@ const Header = () => {
   const { isLoggedIn, login, logout, checkAuthAndRedirect, userCredentials } =
     useAuth();
   const [shouldRender, setShouldRender] = useState(false);
-
+useEffect(()=> {
   checkAuthAndRedirect();
+})
 
   useEffect(() => {
     if (isLoggedIn && userCredentials) {
