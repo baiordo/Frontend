@@ -75,21 +75,33 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const checkAuthAndRedirect = () => {
-    const userLoggedIn = !!localStorage.getItem("it's fkn secret, boy");
+    const localStorageAvailable = typeof localStorage !== 'undefined';
+  
+    const userLoggedIn = localStorageAvailable && !!localStorage.getItem("it's fkn secret, boy");
     setIsLoggedIn(userLoggedIn);
-
+  
     if (!userLoggedIn) {
       router.push("/login");
     }
   };
-
-  //Проверка аутентификации ( допустим как-то очистился local storage), спустя 5 минут этот useEffect пойдет смотреть все ли норм
+  
+  // Проверка аутентификации (допустим, как-то очистился local storage),
+  // спустя 5 минут этот useEffect пойдет смотреть, все ли норм
   useEffect(() => {
-    const interval = setInterval(() => {
-      checkAuthAndRedirect();
-    }, 300000);
-
-    return () => clearInterval(interval);
+    const localStorageAvailable = typeof localStorage !== 'undefined';
+  
+    if (localStorageAvailable) {
+      checkAuthAndRedirect(); // Проверить сразу после монтирования компонента
+  
+      const interval = setInterval(() => {
+        checkAuthAndRedirect();
+      }, 300000);
+  
+      return () => clearInterval(interval);
+    }
+  
+    // Если localStorage недоступен, можно предпринять соответствующие действия
+    console.log('localStorage is not available.');
   }, []);
 
   return (
