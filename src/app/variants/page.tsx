@@ -91,11 +91,12 @@ const Variants: React.FC = () => {
               {variants?.map((variant, index) => (
                 <VariantTable
                   key={index}
-                  address={variant.property_address}
                   area={variant.area}
                   condition={variant.property_condition}
                   id={variant.id}
                   type={variant.property_type}
+                  district={variant.district_name}
+                  subDistrict={variant.sub_district_name}
                   price={variant.price}
                   rooms={variant.rooms}
                   series={variant.series_name}

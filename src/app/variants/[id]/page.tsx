@@ -18,10 +18,13 @@ const Variant: React.FC = () => {
     return <div>Нет данных</div>;
   }
   const sign = variant.property_type === "Участок" ? "соток" : "м²";
-  const userString = typeof window !== 'undefined' ? localStorage.getItem("it's fkn secret, boy") : null;
+  const userString =
+    typeof window !== "undefined"
+      ? localStorage.getItem("it's fkn secret, boy")
+      : null;
   const curator: AgentCred = userString ? JSON.parse(userString) : null;
   if (curator === null) {
-    return <div>В доступе отказано</div>
+    return <div>В доступе отказано</div>;
   }
   return (
     <div className="w-11/12 mx-auto text-base">
@@ -37,7 +40,6 @@ const Variant: React.FC = () => {
       <p>Состояние: {variant.property_condition}</p>
       <p>Серия: {variant.series_name}</p>
       <p>Жилой комплекс: {variant.apartment_complex_name}</p>
-      <p>Адрес: {variant.property_address}</p>
       <p>Район: {variant.district_name}</p>
       <p>Суб-район: {variant.sub_district_name}</p>
       <p>Этажность:{variant.number_of_storeys}</p>
@@ -47,12 +49,13 @@ const Variant: React.FC = () => {
         Площадь: {variant.area} {sign}
       </p>
       <p>Владелец: {variant.property_owner}</p>
-      <p>Номер владельца: {variant.property_owner_phone_number}</p>
       <p>Описание: {variant.property_description}</p>
       {curator.agent_id === variant.curator_id ? (
         <>
-          <p>Примечание: {variant.property_note}</p>
+          <p>Адрес: {variant.property_address}</p>
+          <p>Номер владельца: {variant.property_owner_phone_number}</p>
           <p>Цена на руку: {variant.price_per_hand}$</p>
+          <p>Примечание: {variant.property_note}</p>
         </>
       ) : null}
       <p>Цена: {variant.price}</p>

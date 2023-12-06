@@ -7,10 +7,11 @@ interface TableProps {
   series?: string;
   price: string;
   img?: string;
-  address: string;
   condition?: string;
   rooms?: number;
   type: string;
+  district: string;
+  subDistrict: string;
 }
 
 const VariantTable: React.FC<TableProps> = ({
@@ -19,10 +20,11 @@ const VariantTable: React.FC<TableProps> = ({
   series,
   price,
   img,
-  address,
   condition,
   rooms,
   type,
+  district,
+  subDistrict,
 }) => {
   const sign = type === "Участок" ? "соток" : "м²";
   const imageAddress = img ? img : "/defaultLogo.png";
@@ -39,7 +41,8 @@ const VariantTable: React.FC<TableProps> = ({
       </td>
       <td className="px-6 py-6 underline">
         <Link href={"/variants/" + id}>
-        {type}, {address}, {condition}, {rooms ? rooms + "ком." : undefined}
+        {type},{district},{subDistrict},{condition},{" "}
+          {rooms ? rooms + "ком." : undefined}
         </Link>
       </td>
       <td className="px-6 py-6">{series}</td>
