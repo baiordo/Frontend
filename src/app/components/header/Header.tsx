@@ -134,7 +134,7 @@ useEffect(()=> {
                   </p>
                   <Image
                     className='w-8 h-8 rounded-full cursor-pointer mx-2'
-                    src={userCredentials.agent_avatar_url}
+                    src={userCredentials.agent_avatar_url ? userCredentials.agent_avatar_url : "/defaultLogo.png"}
                     alt='err'
                     height={30}
                     width={30}
