@@ -9,7 +9,7 @@ import {
 } from "@/app/interfaces/variant.interface";
 import axios from "axios";
 
-const API = "http://83.222.8.129:13069";
+const API = "http://81.200.148.149:13069";
 
 const fetchSeries = async () => {
   const response = await axios.get<SeriesInterface>(`${API}/realtor/series`);

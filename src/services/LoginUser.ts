@@ -2,7 +2,7 @@ import { LoginResponse } from '@/app/interfaces/login.interface';
 import axios from 'axios';
 
 export const LoginUser = async (credentials: { email: string, password: string }) => {
-    const apiUrl = 'http://83.222.8.129:13069/user/login';
+    const apiUrl = 'http://81.200.148.149:13069/user/login';
     const requestData = {
         user_email: credentials.email,
         user_password: credentials.password,
