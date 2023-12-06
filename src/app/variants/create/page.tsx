@@ -271,7 +271,7 @@ const CreateVariant: React.FC = () => {
           />
         </div>
       ) : undefined}
-      {apartmentComplexes && property.series === "5" ? (
+      {apartmentComplexes && property.series === "1" ? (
         <div className={apartmentCompaniesClass}>
           <Select
             id="apartmentComplexes"
