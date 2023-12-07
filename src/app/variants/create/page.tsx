@@ -136,6 +136,10 @@ const CreateVariant: React.FC = () => {
       updateProperty("property_location_id", locationId);
       updateVariant("area_id", locationId);
     },
+    onError: () => {
+      setLoading(false);
+      alert("Произошла ошибка. Попробуйте изменить адрес");
+    },
   });
   const addProperty = useMutation({
     mutationFn: async () => {
@@ -143,11 +147,19 @@ const CreateVariant: React.FC = () => {
       updateVariant("property_id", response);
       updateVariant("area_id", response);
     },
+    onError: () => {
+      setLoading(false);
+      alert("Произошла ошибка. Попробуйте данные квартиры");
+    },
   });
   const addAttribute = useMutation({
     mutationFn: async () => {
       const response = await createVariantService.postAttribute(attribute);
       updateVariant("attributes_id", response);
+    },
+    onError: () => {
+      setLoading(false);
+      alert("Произошла ошибка. Попробуйте данные клиента");
     },
   });
   const addVariant = useMutation({
