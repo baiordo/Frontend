@@ -65,7 +65,10 @@ const CreateVariant: React.FC = () => {
       [key]: value,
     }));
   };
-  const userString = typeof window !== 'undefined' ? localStorage.getItem("it's fkn secret, boy") : null;
+  const userString =
+    typeof window !== "undefined"
+      ? localStorage.getItem("it's fkn secret, boy")
+      : null;
   const curator: AgentCred = userString ? JSON.parse(userString) : null;
   const [property, setProperty] = useState<PropertyInterface>({
     property_type: "",
@@ -88,7 +91,7 @@ const CreateVariant: React.FC = () => {
   });
   const [variant, setVariant] = useState<CreateVariantInterface>({
     images: undefined,
-    curator_id: curator? curator.agent_id : "",
+    curator_id: curator ? curator.agent_id : "",
     price_per_hand: "",
     price: "",
     area_id: "",
@@ -166,6 +169,10 @@ const CreateVariant: React.FC = () => {
     onSuccess: () => {
       router.push("/");
       setLoading(false);
+    },
+    onError: () => {
+      setLoading(false);
+      alert("Произошла ошибка. Попробуйте изменить адрес");
     },
   });
   const createVariant = () => {
