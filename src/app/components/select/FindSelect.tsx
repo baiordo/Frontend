@@ -18,6 +18,7 @@ const FindSelect: React.FC<SelectProps> = ({
   value,
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const filteredOptions = options.filter((opt) =>
     opt.label.toLowerCase().includes(searchTerm.toLowerCase())
@@ -27,8 +28,12 @@ const FindSelect: React.FC<SelectProps> = ({
     setSearchTerm(event.target.value);
   };
 
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <>
+    <div className="relative">
       {label ? (
         <label
           htmlFor={id}
@@ -37,29 +42,38 @@ const FindSelect: React.FC<SelectProps> = ({
           {label}
         </label>
       ) : undefined}
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      />
-      <select
-        id={id}
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        onChange={onChange}
-        value={value}
-      >
-        {chooseLabel ? (
-          <option value={""}>{chooseLabel}</option>
-        ) : undefined}
-        {filteredOptions.map((opt, index) => (
-          <option key={index} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-    </>
+      <div className="relative">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          onClick={toggleDropdown}
+        />
+        <div
+          className={`${
+            isOpen ? "block" : "hidden"
+          } absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg dark:bg-gray-800`}
+        >
+          <select
+            id={id}
+            className="w-full p-2.5 dark:text-white"
+            onChange={onChange}
+            value={value}
+          >
+            {chooseLabel ? (
+              <option value={""}>{chooseLabel}</option>
+            ) : undefined}
+            {filteredOptions.map((opt, index) => (
+              <option key={index} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+    </div>
   );
 };
 
