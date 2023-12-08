@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import createVariantService from "@/services/createVariant.service";
 import Checkbox from "@/app/components/checkbox/Checkbox";
-import Select from "@/app/components/select/Select";
+import CustomSelect from "@/app/components/select/CustomSelect";
 import Input from "@/app/components/input/Input";
 import TextArea from "@/app/components/textarea/Textarea";
 import PhotoUploader from "@/app/components/photoUploader/PhotoUploader";
@@ -229,7 +229,7 @@ const CreateVariant: React.FC = () => {
         <Checkbox id="urgently-checkbox" label="Срочно" />
       </div>
       <div>
-        <Select
+        <CustomSelect
           id="property_type"
           label="Выберите тип"
           chooseLabel="Выберите тип"
@@ -247,7 +247,7 @@ const CreateVariant: React.FC = () => {
         />
       </div>
       <div className={apartmentCompaniesClass}>
-        <Select
+        <CustomSelect
           id="property_condition"
           label="Состояние"
           chooseLabel="Выберите состояние"
@@ -261,7 +261,7 @@ const CreateVariant: React.FC = () => {
         />
       </div>
       <div>
-        <Select
+        <CustomSelect
           id="property_document"
           label="Выберите документ"
           chooseLabel="Выберите документ"
@@ -277,7 +277,7 @@ const CreateVariant: React.FC = () => {
       </div>
       {series ? (
         <div className={apartmentCompaniesClass}>
-          <Select
+          <CustomSelect
             id="series"
             label="Серия"
             chooseLabel="Выберите серию"
@@ -309,7 +309,7 @@ const CreateVariant: React.FC = () => {
       ) : undefined}
       {districts ? (
         <div>
-          <Select
+          <CustomSelect
             id="districts"
             label="Выберите район"
             options={districts.map((d) => ({
@@ -322,7 +322,7 @@ const CreateVariant: React.FC = () => {
       ) : undefined}
       {subDistricts ? (
         <div>
-          <Select
+          <CustomSelect
             id="subDistricts"
             label="Суб район"
             chooseLabel="Выберите суб-район"

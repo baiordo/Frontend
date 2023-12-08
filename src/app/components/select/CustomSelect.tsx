@@ -9,7 +9,7 @@ interface SelectProps {
   value?: string;
 }
 
-const Select: React.FC<SelectProps> = ({
+const CustomSelect: React.FC<SelectProps> = ({
   id,
   label,
   chooseLabel,
@@ -46,4 +46,4 @@ const Select: React.FC<SelectProps> = ({
   );
 };
 
-export default Select;
+export default CustomSelect;
