@@ -8,7 +8,7 @@ const fetchVariants = async (page: number, curator?: string) => {
   if (curator) {
     URL = `${API}/variants?page=${page}&curator_name=${curator}`;
   } else {
-    URL = `${API}/variants?page=${page}`
+    URL = `${API}/variants?page=${page}`;
   }
   const response = await axios.get<VariantsInterface>(URL);
   const data = {
@@ -24,9 +24,15 @@ const fetchVariant = async (id: string) => {
   };
   return data;
 };
+
+const deleteVariant = async (id: string) => {
+  await axios.delete(`${API}/realtor/delete?id=${id}`);
+};
+
 const variantService = {
   fetchVariants,
   fetchVariant,
+  deleteVariant,
 };
 
 export default variantService;
