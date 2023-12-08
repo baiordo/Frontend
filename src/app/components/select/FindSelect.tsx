@@ -18,7 +18,6 @@ const Select: React.FC<SelectProps> = ({
   value,
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const sortedOptions = options
     .filter((opt) =>
@@ -28,11 +27,6 @@ const Select: React.FC<SelectProps> = ({
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
-    setIsOpen(true);
-  };
-
-  const handleSelectClick = () => {
-    setIsOpen(!isOpen);
   };
 
   return (
@@ -45,37 +39,25 @@ const Select: React.FC<SelectProps> = ({
           {label}
         </label>
       ) : undefined}
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          onClick={handleSelectClick}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-        <div
-          className={`${
-            isOpen ? "block" : "hidden"
-          } absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg dark:bg-gray-800`}
-        >
-          <select
-            id={id}
-            className="w-full p-2.5 dark:text-white"
-            onChange={onChange}
-            value={value}
-          >
-            {chooseLabel ? (
-              <option value={""}>{chooseLabel}</option>
-            ) : undefined}
-            {sortedOptions.map((opt, index) => (
-              <option key={index} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+      <select
+        id={id}
+        className="w-full p-2.5 dark:text-white"
+        onChange={onChange}
+        value={value}
+      >
+        {sortedOptions.map((opt, index) => (
+          <option key={index} value={opt.value}>
+            {opt.label}
+          </option>
+        ))}
+      </select>
+      <input
+        type="text"
+        placeholder={chooseLabel}
+        value={searchTerm}
+        onChange={handleSearchChange}
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
     </div>
   );
 };
