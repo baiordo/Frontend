@@ -293,7 +293,7 @@ const CreateVariant: React.FC = () => {
       ) : undefined}
       {apartmentComplexes && property.series === "1" ? (
         <div className={apartmentCompaniesClass}>
-          <FindSelect
+          <CustomSelect
             id="apartmentComplexes"
             label="Жилой комплекс"
             chooseLabel="Выберите жилой комплекс"

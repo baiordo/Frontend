@@ -6,7 +6,7 @@ interface SelectProps {
   label?: string;
   chooseLabel?: string;
   options: { value: string; label: string }[];
-  onChange: (selectedOption: { value: string; label: string } | null) => void;
+  onchange: (selectedOption: { value: string; label: string } | null) => void;
   value?: { value: string; label: string } | null;
 }
 
@@ -15,7 +15,7 @@ const FindSelect: React.FC<SelectProps> = ({
   label,
   chooseLabel,
   options,
-  onChange,
+  onchange,
   value,
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -41,7 +41,7 @@ const FindSelect: React.FC<SelectProps> = ({
       <Select
         id={id}
         options={sortedOptions}
-        onChange={onChange}
+        onChange={onchange}
         value={value}
         placeholder={chooseLabel}
         isSearchable
