@@ -16,6 +16,7 @@ import {
 import { AgentCred } from "@/app/interfaces/login.interface";
 import { Loader } from "@/app/components/loader/Loader";
 import { useRouter } from "next/navigation";
+import FindSelect from "@/app/components/select/FindSelect";
 
 const CreateVariant: React.FC = () => {
   const router = useRouter();
@@ -292,7 +293,7 @@ const CreateVariant: React.FC = () => {
       ) : undefined}
       {apartmentComplexes && property.series === "1" ? (
         <div className={apartmentCompaniesClass}>
-          <Select
+          <FindSelect
             id="apartmentComplexes"
             label="Жилой комплекс"
             chooseLabel="Выберите жилой комплекс"
