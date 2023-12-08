@@ -50,7 +50,6 @@ const Variant: React.FC = () => {
   const hour = String(originalDate.getUTCHours()).padStart(2, "0");
   const minute = String(originalDate.getUTCMinutes()).padStart(2, "0");
 
-  // Собираем строку в нужном формате
   const formattedDate = `${year}-${month}-${day}, ${hour}:${minute}`;
   if (loading) {
     return (
