@@ -6,29 +6,42 @@ import Link from "next/link";
 import VariantTable from "../components/variantTable/VariantTable";
 import { AgentCred } from "../interfaces/login.interface";
 import { Loader } from "../components/loader/Loader";
+import { Filters } from "../interfaces/variant.interface";
+import Input from "../components/input/Input";
 
 const Variants: React.FC = () => {
   const [page, setPage] = useState<number>(1);
-  const userString = typeof window !== 'undefined' ? localStorage.getItem("it's fkn secret, boy") : null;
+  const userString =
+    typeof window !== "undefined"
+      ? localStorage.getItem("it's fkn secret, boy")
+      : null;
   const curator: AgentCred = userString ? JSON.parse(userString) : null;
-  const [all, setAll] = useState(true);
+  const initialFilters: Filters = {
+    id: "",
+    max_price: "",
+    min_price: "",
+    district_name: "",
+    sub_district_name: "",
+    apartment_complex_name: "",
+    series_name: "",
+    rooms: "",
+    property_condition: "",
+    curator_name: "",
+    search: "",
+  };
+  const [filters, setFilters] = useState(initialFilters);
+  const updateFilters = (key: string, value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
   const { data: variants, isFetching } = useQuery({
-    queryKey: ["variants", page, all],
-    queryFn: () =>
-      variantService.fetchVariants(
-        page,
-        all ? undefined : curator.agent_full_name
-      ),
+    queryKey: ["variants", page, filters],
+    queryFn: () => variantService.fetchVariants(page, filters ?? filters),
     select: (data) => data.variants,
     placeholderData: keepPreviousData,
   });
-  if (isFetching) {
-    return (
-      <span className="absolute inset-0 flex items-center justify-center">
-        <Loader />
-      </span>
-    );
-  }
   return (
     <div className="text-base">
       <div>
@@ -47,8 +60,8 @@ const Variants: React.FC = () => {
           type="button"
           className="inline-flex items-center px-4 py-2 font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
           onClick={() => {
-            setAll(false);
             setPage(1);
+            updateFilters("curator_name", curator.agent_full_name);
           }}
         >
           Мои варианты
@@ -57,13 +70,123 @@ const Variants: React.FC = () => {
           type="button"
           className="inline-flex items-center px-4 py-2 font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
           onClick={() => {
-            setAll(true);
             setPage(1);
+            setFilters(initialFilters);
           }}
         >
           Все варианты
         </button>
       </div>
+      <div className="border border-zinc-400 p-2">
+        <p className="font-bold">Фильтры</p>
+        <div className="flex flex-wrap items-end">
+          <div className="w-4/12 p-1">
+            <Input
+              id="search"
+              type="text"
+              label="Поиск по тексту"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.search}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="id"
+              type="text"
+              label="id"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.id}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="rooms"
+              type="text"
+              label="Комнат"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.rooms}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="min_price"
+              type="text"
+              label="От"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.min_price}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="max_price"
+              type="text"
+              label="До"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.max_price}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="district_name"
+              type="text"
+              label="Район"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.district_name}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="sub_district_name"
+              type="text"
+              label="Под район"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.sub_district_name}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="apartment_complex_name"
+              type="text"
+              label="Жилой комплекс"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.apartment_complex_name}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="series_name"
+              type="text"
+              label="Серия"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.series_name}
+            />
+          </div>
+          <div className="w-2/12 p-1">
+            <Input
+              id="property_condition"
+              type="text"
+              label="Состояние"
+              autocomplete="off"
+              onchange={updateFilters}
+              value={filters?.property_condition}
+            />
+          </div>
+        </div>
+      </div>
+      {!isFetching ?? (
+        <span className="absolute inset-0 flex items-center justify-center">
+          Идет поиск...
+        </span>
+      )}
       <div className="my-6">
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -107,6 +230,7 @@ const Variants: React.FC = () => {
           </table>
         </div>
       </div>
+
       <div className="flex justify-between sm:px-8">
         <button
           type="button"

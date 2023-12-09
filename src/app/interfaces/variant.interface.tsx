@@ -90,3 +90,17 @@ export interface VariantsInterface {
     curator_phone_number: string;
   }[];
 }
+
+export interface Filters {
+  max_price: string;
+  min_price: string;
+  district_name: string;
+  sub_district_name: string;
+  apartment_complex_name: string;
+  series_name: string;
+  rooms: string;
+  property_condition: string;
+  curator_name: string;
+  search: string;
+  id: string;
+}
