@@ -39,6 +39,16 @@ const fetchSubDistricts = async (id: string | undefined) => {
   return data;
 };
 
+const fetchAllSubDistricts = async () => {
+  const response = await axios.get<SubDistrictsInterface>(
+    `${API}/realtor/all_sub_districts`
+  );
+  const data = {
+    subDistricts: response.data.subDistricts,
+  };
+  return data;
+};
+
 const fetchApartmentComplexes = async () => {
   const response = await axios.get<ApartmentComplexInterface>(
     `${API}/realtor/apartment_complexes`
@@ -71,13 +81,10 @@ const postAttribute = async (attribute: VariantAttributesInterface) => {
   );
   return response.data.id as string;
 };
-const postVariant = async(variant: any) => {
-  const response = await axios.post(
-    `${API}/realtor/variants`,
-    variant
-  )
-  return response.data.id as string
-}
+const postVariant = async (variant: any) => {
+  const response = await axios.post(`${API}/realtor/variants`, variant);
+  return response.data.id as string;
+};
 
 const createVariantService = {
   fetchSeries,
@@ -87,7 +94,8 @@ const createVariantService = {
   postPropertyLocation,
   postProperty,
   postAttribute,
-  postVariant
+  postVariant,
+  fetchAllSubDistricts,
 };
 
 export default createVariantService;

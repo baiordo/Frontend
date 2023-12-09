@@ -8,6 +8,8 @@ import { AgentCred } from "../interfaces/login.interface";
 import { Loader } from "../components/loader/Loader";
 import { Filters } from "../interfaces/variant.interface";
 import Input from "../components/input/Input";
+import CustomSelect from "../components/select/CustomSelect";
+import createVariantService from "@/services/createVariant.service";
 
 const Variants: React.FC = () => {
   const [page, setPage] = useState<number>(1);
@@ -29,6 +31,26 @@ const Variants: React.FC = () => {
     curator_name: "",
     search: "",
   };
+  const { data: districts } = useQuery({
+    queryKey: ["districts"],
+    queryFn: createVariantService.fetchDistricts,
+    select: (data) => data.districts,
+  });
+  const { data: subDistricts } = useQuery({
+    queryKey: ["sub_districts"],
+    queryFn: () => createVariantService.fetchAllSubDistricts(),
+    select: (data) => data.subDistricts,
+  });
+  const { data: apartmentComplexes } = useQuery({
+    queryKey: ["apartment_complexes"],
+    queryFn: createVariantService.fetchApartmentComplexes,
+    select: (data) => data.apartmentComplexes,
+  });
+  const { data: series } = useQuery({
+    queryKey: ["series"],
+    queryFn: createVariantService.fetchSeries,
+    select: (data) => data.series,
+  });
   const [filters, setFilters] = useState(initialFilters);
   const updateFilters = (key: string, value: string) => {
     setFilters((prev) => ({
@@ -131,53 +153,85 @@ const Variants: React.FC = () => {
             />
           </div>
           <div className="w-2/12 p-1">
-            <Input
-              id="district_name"
-              type="text"
-              label="Район"
-              autocomplete="off"
-              onchange={updateFilters}
-              value={filters?.district_name}
-            />
+            {districts ? (
+              <CustomSelect
+                id="district_name"
+                label="Район"
+                chooseLabel="Все"
+                value={filters.district_name}
+                options={districts?.map((d) => ({
+                  value: d.district_name,
+                  label: d.district_name,
+                }))}
+                onchange={(event) =>
+                  updateFilters("district_name", event.target.value)
+                }
+              />
+            ) : undefined}
           </div>
           <div className="w-2/12 p-1">
-            <Input
-              id="sub_district_name"
-              type="text"
-              label="Под район"
-              autocomplete="off"
-              onchange={updateFilters}
-              value={filters?.sub_district_name}
-            />
+            {subDistricts ? (
+              <CustomSelect
+                id="sub_district_name"
+                value={filters.sub_district_name}
+                chooseLabel="Все"
+                label="Под район"
+                options={subDistricts?.map((sd) => ({
+                  value: sd.sub_district_name,
+                  label: sd.sub_district_name,
+                }))}
+                onchange={(event) =>
+                  updateFilters("sub_district_name", event.target.value)
+                }
+              />
+            ) : undefined}
           </div>
           <div className="w-2/12 p-1">
-            <Input
-              id="apartment_complex_name"
-              type="text"
-              label="Жилой комплекс"
-              autocomplete="off"
-              onchange={updateFilters}
-              value={filters?.apartment_complex_name}
-            />
+            {apartmentComplexes ? (
+              <CustomSelect
+                id="apartment_complex_name"
+                value={filters.apartment_complex_name}
+                chooseLabel="Все"
+                label="Жилой комплекс"
+                options={apartmentComplexes?.map((ac) => ({
+                  value: ac.apartment_complex_name,
+                  label: ac.apartment_complex_name,
+                }))}
+                onchange={(event) =>
+                  updateFilters("apartment_complex_name", event.target.value)
+                }
+              />
+            ) : undefined}
           </div>
           <div className="w-2/12 p-1">
-            <Input
-              id="series_name"
-              type="text"
-              label="Серия"
-              autocomplete="off"
-              onchange={updateFilters}
-              value={filters?.series_name}
-            />
+            {series ? (
+              <CustomSelect
+                id="series_name"
+                value={filters.series_name}
+                chooseLabel="Все"
+                label="Серия"
+                options={series.map((s) => ({
+                  value: s.series_name,
+                  label: s.series_name,
+                }))}
+                onchange={(event) =>
+                  updateFilters("series_name", event.target.value)
+                }
+              />
+            ) : undefined}
           </div>
           <div className="w-2/12 p-1">
-            <Input
+            <CustomSelect
               id="property_condition"
-              type="text"
+              chooseLabel="Все"
               label="Состояние"
-              autocomplete="off"
-              onchange={updateFilters}
-              value={filters?.property_condition}
+              options={[
+                { value: "ПСО", label: "Псо" },
+                { value: "С отделкой", label: "С отделкой" },
+              ]}
+              onchange={(event) =>
+                updateFilters("property_condition", event.target.value)
+              }
             />
           </div>
         </div>
