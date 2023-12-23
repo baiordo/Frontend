@@ -21,12 +21,14 @@ export interface SubDistrictsInterface {
   }[];
 }
 export interface PropertyLocationInterface {
+  id?: string;
   property_address: string;
   district_id: string;
   sub_district_id: string;
 }
 
 export interface PropertyInterface {
+  id?: string;
   property_type: string;
   property_status: string;
   property_condition: string | undefined;
@@ -41,6 +43,7 @@ export interface PropertyInterface {
 }
 
 export interface VariantAttributesInterface {
+  id?: string;
   property_owner: string;
   property_owner_phone_number: string;
   property_note: string;
@@ -48,6 +51,7 @@ export interface VariantAttributesInterface {
 }
 
 export interface CreateVariantInterface {
+  id?: string;
   images: File[] | undefined;
   curator_id: string;
   price_per_hand: string;
@@ -103,4 +107,11 @@ export interface Filters {
   curator_name: string;
   search: string;
   id: string;
+}
+
+export interface UserData {
+  curators: {
+    user_id: string;
+    full_name: string;
+  }[]
 }
