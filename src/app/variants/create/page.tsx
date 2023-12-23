@@ -223,7 +223,7 @@ const CreateVariant: React.FC = () => {
   }
   return (
     <div className="w-11/12 mx-auto">
-      <h1 className="text-center text-2xl mb-2">Добавление варианта</h1>
+      <h1 className="text-center text-2xl mb-2">Добавить вариант</h1>
       <div className="flex">
         <Checkbox id="website-checkbox" label="На сайт" />
         <Checkbox id="urgently-checkbox" label="Срочно" />

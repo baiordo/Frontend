@@ -37,7 +37,7 @@ const Variants: React.FC = () => {
     select: (data) => data.districts,
   });
   const { data: subDistricts } = useQuery({
-    queryKey: ["sub_districts"],
+    queryKey: ["all_sub_districts"],
     queryFn: () => createVariantService.fetchAllSubDistricts(),
     select: (data) => data.subDistricts,
   });

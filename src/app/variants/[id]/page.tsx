@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import variantService from "@/services/variant.service";
 import { AgentCred } from "@/app/interfaces/login.interface";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Loader } from "@/app/components/loader/Loader";
 
